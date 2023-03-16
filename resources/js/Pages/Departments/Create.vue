@@ -7,16 +7,16 @@ import TextInput from '@/Components/TextInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
-    id:''
+    name:''
 });
 </script>
 
 <template>
-    <Head title="Crear Department" />
+    <Head title="Crear Departmento" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Crear Department</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Crear Departmento</h2>
         </template>
 
         <div class="py-12">
