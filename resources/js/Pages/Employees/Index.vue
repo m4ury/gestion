@@ -35,7 +35,7 @@ const onPageClick = (event) => {
     formPage.get(route('employees.index', {page:event}));
 }
 
-const openModal = (op, name, email, phone, departments, employee) => {
+const openModal = (op, name, email, phone, department, employee) => {
     modal.value = true;
     nextTick( () => nameInput.value.focus());
     operation.value = op;
@@ -48,7 +48,7 @@ const openModal = (op, name, email, phone, departments, employee) => {
         form.name = name;
         form.email = email;
         form.phone = phone;
-        form.department_id = departments;
+        form.department_id = department;
     }
 }
 const closeModal = () => {
@@ -131,7 +131,7 @@ const deleteEmployee = (id, name) =>{
                             <td class="border border-gray-400 px-2 py-2">{{ emp.department }}</td>
                             <td class="border border-gray-400 px-2 py-2">
                                 <WarningButton
-                                    @click="openModal(2, emp.name, emp.email, emp.phone, emp.department, emp.id)">
+                                    @click="openModal(2, emp.name, emp.email, emp.phone, emp.department_id, emp.id)">
                                     <i class="fa-solid fa-edit"></i>
                                 </WarningButton>
                             </td>
@@ -177,8 +177,8 @@ const deleteEmployee = (id, name) =>{
             </div>
             <div class="p-3">
                 <InputLabel for="department_id" value="Department: "></InputLabel>
-                <SelectInput id="department_id" v-model="form.department" class="mt-1 block w-3/4" placeholder="Department"></SelectInput>
-                <InputError :messaje="form.errors.department" class="mt-2"></InputError>
+                <SelectInput id="department_id" :options="departments" v-model="form.department_id" class="mt-1 block w-3/4" placeholder="Department"></SelectInput>
+                <InputError :messaje="form.errors.department_id" class="mt-2"></InputError>
             </div>
             <div class="p-3 mt-6">
                 <PrimaryButton :disabled="form.processing" @click="save">
