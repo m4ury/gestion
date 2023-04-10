@@ -2,7 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import { Bar } from 'vue-chartjs'
+import { Bar, Pie } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement } from 'chart.js';
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement);
 
@@ -17,19 +17,25 @@ const chartOptions = ref([]);
 const colors = ref([]);
 
 const random = () => {
-    return Math.floor(Math.random() * 2556)
+    return Math.floor(Math.random() * 256)
 }
 props.data.map((row) => (
     departments.value.push(row.name),
-    departments.value.push(row.count),
-    colors.
-
+    employees.value.push(row.count),
+    colors.value.push("rgb("+random()+","+random()+","+random()+")")
 ))
+chartOptions.value = { responsive:true }
+chartData.value = {
+    labels:departments.value,
+    datasets:[
+        { labels:'Employees', data:employees.value, backgroundColor:colors }
+    ]
+}
 
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Graphic" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -37,9 +43,9 @@ props.data.map((row) => (
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">You're logged in!</div>
+                    <Bar :data = "chartData" :options="chartOptions"></Bar>
                 </div>
             </div>
         </div>

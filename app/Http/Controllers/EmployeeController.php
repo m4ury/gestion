@@ -98,6 +98,6 @@ class EmployeeController extends Controller
         ->get();
 
         $departments = Department::all();
-        return Inertia::render('Employees/Reports', ['employees' => $employees, 'employees' => $employees]);
+        return Inertia::render('Employees/Reports', ['employees' => $employees, 'departments' => $departments]);
     }
 }
