@@ -1,6 +1,5 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import DangerButton from '@/Components/DangerButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { nextTick, ref } from 'vue';
@@ -16,11 +15,14 @@ import JsZip from 'jszip';
 import pdfmake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import Select from 'datatables.net-select';
+import Swal from 'sweetalert2';
+import DangerButton from '@/Components/DangerButton.vue';
+import WarningButton from '@/Components/WarningButton.vue';
+
 pdfmake.vfs = pdfFonts.pdfMake ? pdfFonts.pdfMake.vfs : pdfmake.vfs;
 window.JSZip = JsZip;
 DataTable.use(ButtonsHtml5);
 DataTable.use(Select);
-import Swal from 'sweetalert2';
 
 const descripcionInput = ref(null);
 const modal = ref(false);
@@ -30,10 +32,6 @@ const id = ref('');
 
 const props = defineProps({
     medicamentos: {type:Object}
-});
-
-const form = useForm({
-    descripcion:'', presentacion:'', unidad:'', stock_max:''
 });
 
 const formPage = useForm({});
@@ -81,24 +79,7 @@ const ok = (msj) => {
     Swal.fire({title:msj, icon:'success'});
 }
 
-const deleteMedicamento = (id, descripcion) =>{
-    const alerta = Swal.mixin({
-        buttonsStyling:true
-    });
-    alerta.fire({
-        title: 'Estas seguro de eliminar '+descripcion+' ?',
-        icon: 'question', showCancelButton:true,
-        confirmButtonText: '<i class="fa-solid fa-check"></i> Si, eliminar',
-        cancelButtonText: '<i class="fa-solid fa-ban"></i> Cancelar'
-    }).then((result) => {
-        if(result.isConfirmed) {
-            form.delete(route('medicamentos.destroy', id),{
-                onSuccess: () => {ok('Medicamento eliminado')}
-            });
-        }
-    });
-}
-
+const table = ref();
 const columns1 = ref([]);
 const buttons1 = ref([]);
 
@@ -123,6 +104,27 @@ buttons1.value = [
         className:'inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150'
     },
 ]
+const form = useForm({
+    id: ''
+});
+
+const deleteMedicamento = (id, descripcion) =>{
+    const alerta = Swal.mixin({
+        buttonsStyling:true
+    });
+    alerta.fire({
+        title: 'Estas seguro de eliminar '+descripcion+' ?',
+        icon: 'question', showCancelButton:true,
+        confirmButtonText: '<i class="fa-solid fa-check"></i> Si, eliminar',
+        cancelButtonText: '<i class="fa-solid fa-ban"></i> Cancelar'
+    }).then((result) => {
+        if(result.isConfirmed) {
+            form.delete(route('medicamentos.destroy', id),{
+                onSuccess: () => {ok('Medicamento eliminado')}
+            });
+        }
+    });
+}
 </script>
 
 <template>

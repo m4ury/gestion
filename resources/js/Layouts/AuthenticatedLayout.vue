@@ -37,11 +37,11 @@ const showingNavigationDropdown = ref(false);
                                     Medicamentos
                                 </NavLink>
                             </div>
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink :href="route('employees.index')" :active="route().current('employees.index')">
                                     Employees
                                 </NavLink>
-                            </div>
+                            </div> -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink :href="route('graphic')" :active="route().current('graphic')">
                                     Graphics
@@ -135,11 +135,11 @@ const showingNavigationDropdown = ref(false);
                             Dashboard
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('medicamentos.index')" :active="route().current('medicamentos.index')">
-                            Departments
+                            Medicamentos
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('employees.index')" :active="route().current('employees.index')">
+                        <!-- <ResponsiveNavLink :href="route('employees.index')" :active="route().current('employees.index')">
                             Employees
-                        </ResponsiveNavLink>
+                        </ResponsiveNavLink> -->
                         <ResponsiveNavLink :href="route('graphic')" :active="route().current('graphic')">
                             Graphics
                         </ResponsiveNavLink>
