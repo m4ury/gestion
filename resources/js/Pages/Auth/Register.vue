@@ -29,7 +29,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="rut" value="Rut.:" />
+                <InputLabel for="rut" value="Rut.: " />
 
                 <TextInput
                     id="rut"
@@ -38,6 +38,7 @@ const submit = () => {
                     v-model="form.rut"
                     required
                     autofocus
+                    placeholder="Ej.: 16800111-0"
                     autocomplete="rut"
                 />
 
@@ -45,7 +46,7 @@ const submit = () => {
             </div>
 
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="name" value="Nombres" />
 
                 <TextInput
                     id="name"
@@ -60,7 +61,7 @@ const submit = () => {
             </div>
 
             <div>
-                <InputLabel for="apellidoP" value="ApellidoP" />
+                <InputLabel for="apellidoP" value="Apellido paterno" />
 
                 <TextInput
                     id="apellidoP"
@@ -83,6 +84,7 @@ const submit = () => {
                     class="mt-1 block w-full"
                     v-model="form.email"
                     required
+                    placeholder="Ej.: correo@mail.com"
                     autocomplete="email"
                 />
 
@@ -124,7 +126,7 @@ const submit = () => {
                     :href="route('login')"
                     class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                    Already registered?
+                    Ya registrado?
                 </Link>
 
                 <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">

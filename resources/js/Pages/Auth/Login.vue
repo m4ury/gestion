@@ -36,7 +36,7 @@ const submit = () => {
         <form @submit.prevent="submit">
 
             <div class="mt-4">
-                <InputLabel for="rut" value="Rut" />
+                <InputLabel for="rut" value="Rut.: " />
 
                 <TextInput
                     id="rut"
@@ -45,7 +45,8 @@ const submit = () => {
                     v-model="form.rut"
                     required
                     autofocus
-                    autocomplete="username"
+                    placeholder="Ej.: 16000111-0"
+                    autocomplete="rut"
                 />
 
                 <InputError class="mt-2" :message="form.errors.rut" />
@@ -79,7 +80,7 @@ const submit = () => {
                     :href="route('password.request')"
                     class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                    Forgot your password?
+                    Olvidó su contraseña?
                 </Link>
 
                 <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
