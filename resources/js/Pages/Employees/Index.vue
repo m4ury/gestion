@@ -70,7 +70,7 @@ const save = () => {
 }
 const ok = (msj) => {
     form.reset();
-    //closeModal();
+    closeModal();
     Swal.fire({title:msj, icon:'success'});
 }
 

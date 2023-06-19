@@ -92,12 +92,14 @@ const deleteMedicamento = (id, descripcion) =>{
 }
 
 </script>
+
 <template>
     <Head title="Medicamentos" />
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Medicamentos</h2>
         </template>
+
         <div class="py-12">
             <div class="bg-white grid v-screen place-items-center">
                 <div class="mt-3 mb-3 flex">
@@ -151,28 +153,28 @@ const deleteMedicamento = (id, descripcion) =>{
             <h2 class="p-3 text-lg font.medium text-hray-900">{{ title }}</h2>
             <div class="p-3">
                 <InputLabel for="descripcion" value="Descripcion: "></InputLabel>
-                <TextInput id="descripcion" ref="descripcion"
+                <TextInput id="descripcion" ref="descripcionInput"
                 v-model="form.descripcion" type="text" class="mt-1 block w-3/4"
                 placeholder="Descripcion"></TextInput>
                 <InputError :messaje="form.errors.descripcion" class="mt-2"></InputError>
             </div>
             <div class="p-3">
                 <InputLabel for="presentacion" value="Presentacion: "></InputLabel>
-                <TextInput id="presentacion" ref="presentacion"
+                <TextInput id="presentacion" ref="presentacionInput"
                 v-model="form.presentacion" type="text" class="mt-1 block w-3/4"
                 placeholder="Presentacion"></TextInput>
                 <InputError :messaje="form.errors.presentacion" class="mt-2"></InputError>
             </div>
             <div class="p-3">
                 <InputLabel for="unidad" value="Unidad: "></InputLabel>
-                <TextInput id="unidad" ref="unidad"
+                <TextInput id="unidad" ref="unidadInput"
                 v-model="form.unidad" type="text" class="mt-1 block w-3/4"
                 placeholder="Unidad"></TextInput>
                 <InputError :messaje="form.errors.unidad" class="mt-2"></InputError>
             </div>
             <div class="p-3">
                 <InputLabel for="stock_max" value="Stock Max: "></InputLabel>
-                <TextInput id="stock_max" ref="stock_max"
+                <TextInput id="stock_max" ref="stock_maxInput"
                 v-model="form.stock_max" type="number" class="mt-1 block w-3/4"
                 placeholder="stock maximo"></TextInput>
                 <InputError :messaje="form.errors.stock_max" class="mt-2"></InputError>

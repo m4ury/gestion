@@ -14,7 +14,7 @@ class MedicamentoController extends Controller
     public function index()
     {
         $medicamentos = Medicamento::select('id', 'descripcion', 'presentacion', 'unidad', 'stock_max')
-            ->get();
+            ->paginate(10);
         return Inertia::render('Medicamentos/Index', ['medicamentos' => $medicamentos]);
     }
 
@@ -67,7 +67,7 @@ class MedicamentoController extends Controller
             'presentacion' => 'required|max:80',
             'stock_max' => 'required|numeric',
         ]);
-        $medicamentos->update($request->input());
+        $medicamento->update($request->input());
         return redirect('medicamentos');
     }
 
@@ -76,7 +76,7 @@ class MedicamentoController extends Controller
      */
     public function destroy(Medicamento $medicamento)
     {
-        $medicamentos->delete();
+        $medicamento->delete();
         return redirect('medicamentos');
     }
 }
