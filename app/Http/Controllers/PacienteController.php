@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\Paciente;
 use App\Http\Requests\StorePacienteRequest;
 use App\Http\Requests\UpdatePacienteRequest;
-use App\Models\Paciente;
 
 class PacienteController extends Controller
 {
@@ -13,9 +14,9 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        $pacientes = Paciente::select('id', 'descripcion', 'presentacion', 'unidad', 'stock_max')
+        $pacientes = Paciente::select('id', 'rut', 'nombres', 'apellidoP', 'apellidoM', 'sexo')
             ->paginate(10);
-        return Inertia::render('pacientes/Index', ['pacientes' => $pacientes]);
+        return Inertia::render('Pacientes/Index', ['pacientes' => $pacientes]);
     }
 
     /**
@@ -31,7 +32,11 @@ class PacienteController extends Controller
      */
     public function store(StorePacienteRequest $request)
     {
-        //
+
+        dd($request->all());
+        $paciente = new Paciente($request->input());
+        $paciente->save();
+        return redirect('pacientes');
     }
 
     /**

@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MedicamentoController;
+use App\Http\Controllers\PacienteController;
 
 
 /*
