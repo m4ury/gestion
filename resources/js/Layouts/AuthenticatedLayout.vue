@@ -38,11 +38,11 @@ const showingNavigationDropdown = ref(false);
                                 </NavLink>
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('employees.index')" :active="route().current('employees.index')">
-                                    Employees
+                                <NavLink :href="route('pacientes.index')" :active="route().current('pacientes.index')">
+                                    Pacientes
                                 </NavLink>
                             </div>
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink :href="route('graphic')" :active="route().current('graphic')">
                                     Graphics
                                 </NavLink>
@@ -51,7 +51,7 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('reports')" :active="route().current('reports')">
                                     Reports
                                 </NavLink>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -135,17 +135,17 @@ const showingNavigationDropdown = ref(false);
                             Dashboard
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('medicamentos.index')" :active="route().current('medicamentos.index')">
-                            Departments
+                            Medicamentos
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('employees.index')" :active="route().current('employees.index')">
-                            Employees
+                        <ResponsiveNavLink :href="route('pacientes.index')" :active="route().current('pacientes.index')">
+                            Pacientes
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('graphic')" :active="route().current('graphic')">
+                        <!-- <ResponsiveNavLink :href="route('graphic')" :active="route().current('graphic')">
                             Graphics
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('reports')" :active="route().current('reports')">
                             Reports
-                        </ResponsiveNavLink>
+                        </ResponsiveNavLink> -->
                     </div>
 
                     <!-- Responsive Settings Options -->

@@ -38,10 +38,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('medicamentos', MedicamentoController::class);
-    Route::resource('departments', DepartmentController::class);
+    Route::resource('pacientes', PacienteController::class);
+
+    /* Route::resource('departments', DepartmentController::class);
     Route::resource('employees', EmployeeController::class);
     Route::get('graphic', [EmployeeController::class, 'EmployeeByDepartment'])->name('graphic');
-    Route::get('reports', [EmployeeController::class, 'reports'])->name('reports');
+    Route::get('reports', [EmployeeController::class, 'reports'])->name('reports'); */
 });
 
 require __DIR__ . '/auth.php';
