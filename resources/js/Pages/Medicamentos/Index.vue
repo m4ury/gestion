@@ -13,6 +13,7 @@ import { Head,useForm } from '@inertiajs/vue3';
 import { nextTick, ref, onMounted } from 'vue';
 import Swal from 'sweetalert2';
 import VueTailwindPagination from '@ocrv/vue-tailwind-pagination';
+import { FormKit } from '@formkit/vue'
 
 const descripcionInput = ref(null);
 const modal = ref(false);
@@ -67,6 +68,11 @@ const save = () => {
         });
     }
 }
+
+const handleSubmit = (data) => {
+    
+
+}
 const ok = (msj) => {
     form.reset();
     closeModal();
@@ -107,11 +113,11 @@ const deleteMedicamento = (id, descripcion) =>{
                     </PrimaryButton>
                 </div>
             </div>
-            <div class="bg-white grid v-screen place-items-center overflow-x-auto">
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-6">
 
-                <table v-if="medicamentos.data.length > 0" class="table-auto border border-gray-400">
-                    <thead>
-                        <tr class="bg-gray-100">
+                <table v-if="medicamentos.data.length > 0" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <th class="px-2 py-2">DESCRIPCION</th>
                             <th class="px-2 py-2">PRESENTACION</th>
                             <th class="px-2 py-2">UNIDAD</th>
@@ -164,7 +170,63 @@ const deleteMedicamento = (id, descripcion) =>{
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            <div class="px-6 py-3">
+            <div class="mx-auto py-6 px-6">
+              <FormKit
+                type="form"
+                :actions="false"
+                incomplete-message="Hay errores en el formulario"
+                @submit="handleSubmit"
+              >
+              <FormKit
+                      name="description"
+                      type="textarea"
+                      label="Descripción"
+                      placeholder="ej.: Paracetamol"
+                      validation="required|length:5,500"
+                      :validation-messages="{
+                  required: 'La descripción es requerida'
+                }"
+              />
+              <FormKit
+                  type="text"
+                  name="presentation"
+                  label="Presentacion"
+                  placeholder="ej.: Tabletas"
+                  validation="required"
+                  :validation-messages="{
+                     required: 'La presentación es requerida'
+                  }"
+              />
+                  <div class="flex gap-5 my-3">
+                      <FormKit
+                          type="text"
+                          name="unit"
+                          label="Unidad"
+                          placeholder="ej.: Caja de 10 pastillas"
+                          validation="required"
+                          :validation-messages="{
+                         required: 'La unidad es requerida'
+                      }"
+                      />
+                      <FormKit
+                          type="text"
+                          name="stock"
+                          label="Stock"
+                          placeholder="ej.: 1000"
+                          validation="required|number"
+                          :validation-messages="{
+                         required: 'La stock es requerida'
+                      }"
+                      />
+                    </div>
+                  <FormKit
+                      type="submit"
+                      label="Guardar"
+                      prefix-icon="add"
+                      />
+            </FormKit>
+            </div>
+<!--            <div class="px-6 py-3">
                 <InputLabel for="descripcion" value="Descripcion: "></InputLabel>
                 <TextInput id="descripcion" ref="descripcionInput"
                 v-model="form.descripcion" type="text" class="mt-1 block w-full"
@@ -195,10 +257,10 @@ const deleteMedicamento = (id, descripcion) =>{
                     placeholder="stock maximo"></TextInput>
                     <InputError :messaje="form.errors.stock_max" class="mt-2"></InputError>
                 </div>
-            </div>
+            </div>-->
 
             <!-- Modal footer -->
-            <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+<!--            <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <PrimaryButton
                     data-modal-hide="staticModal"
                     type="button"
@@ -213,20 +275,16 @@ const deleteMedicamento = (id, descripcion) =>{
                     class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
                     Cancelar
                 </SecondaryButton>
-            </div>
-
-
-<!--            <div class="p-3 mt-6">
-                <PrimaryButton :disabled="form.processing" @click="save">
-                    <i class="fa-solid fa-save"></i> Guardar
-                </PrimaryButton>
-            </div>
-            <div class="p-3 mt-6 flex justify-end">
-                <SecondaryButton class="ml-3" :disabled="form.processing"
-                @click="closeModal">
-                    Cancelar
-                </SecondaryButton>
             </div>-->
+
         </Modal>
     </AuthenticatedLayout>
 </template>
+<style>
+    .formkit-wrapper {
+        max-width: 100%;
+    }
+    .formkit-outer {
+        max-width: 100%;
+    }
+</style>
