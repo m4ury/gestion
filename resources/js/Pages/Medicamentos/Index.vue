@@ -10,7 +10,7 @@ import WarningButton from '@/Components/WarningButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Modal from '@/Components/Modal.vue';
 import { Head,useForm } from '@inertiajs/vue3';
-import { nextTick, ref } from 'vue';
+import { nextTick, ref, onMounted } from 'vue';
 import Swal from 'sweetalert2';
 import VueTailwindPagination from '@ocrv/vue-tailwind-pagination';
 
@@ -90,7 +90,6 @@ const deleteMedicamento = (id, descripcion) =>{
         }
     });
 }
-
 </script>
 
 <template>
@@ -109,39 +108,78 @@ const deleteMedicamento = (id, descripcion) =>{
                 </div>
             </div>
             <div class="bg-white grid v-screen place-items-center overflow-x-auto">
-                <table class="table-auto border border-gray-400">
-                    <thead>
-                        <tr class="bg-gray-100">
-                            <th class="px-2 py-2">DESCRIPCION</th>
-                            <th class="px-2 py-2">PRESENTACION</th>
-                            <th class="px-2 py-2">UNIDAD</th>
-                            <th class="px-2 py-2">STOCK MAXIMO</th>
-                            <th class="px-2 py-2">Editar</th>
-                            <th class="px-2 py-2">Eliminar</th>
+                <div class="overflow-x-auto shadow-md sm:rounded-lg overflow-hidden mb-3">
+<!-- TABLA INICIO                -->
+                    <table v-if="medicamentos.data.length > 0" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="p-4">
+                                <div class="flex items-center">
+                                    <input id="checkbox-all" type="checkbox" class="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="checkbox-all" class="sr-only">checkbox</label>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-4">Descripción</th>
+                            <th scope="col" class="p-4">Presentación</th>
+                            <th scope="col" class="p-4">Unidad</th>
+                            <th scope="col" class="p-4">Stock</th>
+                            <th scope="col" class="p-4 col-span-3 text-center">Acciones</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="med, i in medicamentos.data" :key="med.id">
-                            <td class="border border-gray-400 px-2 py-2">{{ med.descripcion }}</td>
-                            <td class="border border-gray-400 px-2 py-2">{{ med.presentacion }}</td>
-                            <td class="border border-gray-400 px-2 py-2">{{ med.unidad }}</td>
-                            <td class="border border-gray-400 px-2 py-2">{{ med.stock_max }}</td>
-                            <td class="border border-gray-400 px-2 py-2">
-                                <WarningButton
-                                    @click="openModal(2, med.descripcion, med.presentacion, med.unidad, med.stock_max, med.id)">
-                                    <i class="fa-solid fa-edit"></i>
-                                </WarningButton>
+                        </thead>
+                        <tbody>
+                        <tr v-for="med in medicamentos.data" :key="med.id" class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <td class="p-4 w-4">
+                                <div class="flex items-center">
+                                    <input id="checkbox-table-search-1" type="checkbox" onclick="event.stopPropagation()" class="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                </div>
                             </td>
-                            <td class="border border-gray-400 px-2 py-2">
-                                <DangerButton @click="deleteMedicamento(med.id, med.descripcion)">
-                                    <i class="fa-solid fa-trash"></i>
-                                </DangerButton>
+                            <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <div class="flex items-center mr-3">
+                                    {{ med.descripcion }}
+                                </div>
+                            </th>
+                            <td class="px-4 py-3">
+                                <span class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                                    {{ med.presentacion }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <div class="flex items-center">
+                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-red-700"></div>
+                                    {{ med.unidad }}
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <!--       TODO: give format number                         -->
+                                {{ med.stock_max }}
+                            </td>
+
+
+                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <div class="flex items-center space-x-4">
+                                    <SecondaryButton>
+                                        <i class="fa-solid fa-eye"></i>
+                                    </SecondaryButton>
+                                    <WarningButton
+                                        @click="openModal(2, med.descripcion, med.presentacion, med.unidad, med.stock_max, med.id)">
+                                        <i class="fa-solid fa-edit"></i>
+                                    </WarningButton>
+                                    <DangerButton @click="deleteMedicamento(med.id, med.descripcion)">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </DangerButton>
+                                </div>
                             </td>
                         </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                    <!-- TABLA FIN                -->
+                    <div v-else class="bg-white grid v-screen place-items-center">
+                        <h2 class="p-3 text-lg font.medium text-hray-900">No hay datos</h2>
+                    </div>
+                </div>
             </div>
-            <div class="bg-white grid v-screen place-items-center overflow-x-auto">
+            <div v-if="medicamentos.data.length > 0" class="bg-white grid v-screen place-items-center overflow-x-auto">
                 <VueTailwindPagination
                 :current="medicamentos.currentPage" :total="medicamentos.total"
                 :per-page="medicamentos.perPage"
@@ -150,36 +188,70 @@ const deleteMedicamento = (id, descripcion) =>{
             </div>
         </div>
         <Modal :show="modal" @close="closeModal()">
-            <h2 class="p-3 text-lg font.medium text-hray-900">{{ title }}</h2>
-            <div class="p-3">
+            <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    {{ title }}
+                </h3>
+                <button @click="closeModal" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="staticModal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <div class="px-6 py-3">
                 <InputLabel for="descripcion" value="Descripcion: "></InputLabel>
                 <TextInput id="descripcion" ref="descripcionInput"
-                v-model="form.descripcion" type="text" class="mt-1 block w-3/4"
+                v-model="form.descripcion" type="text" class="mt-1 block w-full"
                 placeholder="Descripcion"></TextInput>
                 <InputError :messaje="form.errors.descripcion" class="mt-2"></InputError>
             </div>
-            <div class="p-3">
+            <div class="px-6 py-3">
                 <InputLabel for="presentacion" value="Presentacion: "></InputLabel>
                 <TextInput id="presentacion" ref="presentacionInput"
-                v-model="form.presentacion" type="text" class="mt-1 block w-3/4"
+                v-model="form.presentacion" type="text" class="mt-1 block w-full"
                 placeholder="Presentacion"></TextInput>
                 <InputError :messaje="form.errors.presentacion" class="mt-2"></InputError>
             </div>
-            <div class="p-3">
-                <InputLabel for="unidad" value="Unidad: "></InputLabel>
-                <TextInput id="unidad" ref="unidadInput"
-                v-model="form.unidad" type="text" class="mt-1 block w-3/4"
-                placeholder="Unidad"></TextInput>
-                <InputError :messaje="form.errors.unidad" class="mt-2"></InputError>
+            <div class="px-3 flex flex-row justify-between">
+                <div class="w-1/2 px-3 py-3">
+                    <InputLabel for="unidad" value="Unidad: "></InputLabel>
+                    <TextInput id="unidad" ref="unidadInput"
+                    v-model="form.unidad" type="text" class="bg-white mt-1 block w-full"
+                    placeholder="Unidad"></TextInput>
+                    <InputError :messaje="form.errors.unidad" class="mt-2"></InputError>
+                </div>
+
+                <div class="w-1/2 px-3 py-3">
+                    <InputLabel for="stock_max" value="Stock Max: "></InputLabel>
+                    <TextInput id="stock_max" ref="stock_maxInput"
+                    v-model="form.stock_max" type="number"
+                               class="bg-white mt-1 block w-full"
+                    placeholder="stock maximo"></TextInput>
+                    <InputError :messaje="form.errors.stock_max" class="mt-2"></InputError>
+                </div>
             </div>
-            <div class="p-3">
-                <InputLabel for="stock_max" value="Stock Max: "></InputLabel>
-                <TextInput id="stock_max" ref="stock_maxInput"
-                v-model="form.stock_max" type="number" class="mt-1 block w-3/4"
-                placeholder="stock maximo"></TextInput>
-                <InputError :messaje="form.errors.stock_max" class="mt-2"></InputError>
+
+            <!-- Modal footer -->
+            <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                <PrimaryButton
+                    data-modal-hide="staticModal"
+                    type="button"
+                    @click="save"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <i class="fa-solid fa-save mx-1"></i> Guardar
+                </PrimaryButton>
+                <SecondaryButton
+                    data-modal-hide="staticModal"
+                    type="button"
+                    @click="closeModal"
+                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                    Cancelar
+                </SecondaryButton>
             </div>
-            <div class="p-3 mt-6">
+
+
+<!--            <div class="p-3 mt-6">
                 <PrimaryButton :disabled="form.processing" @click="save">
                     <i class="fa-solid fa-save"></i> Guardar
                 </PrimaryButton>
@@ -189,7 +261,7 @@ const deleteMedicamento = (id, descripcion) =>{
                 @click="closeModal">
                     Cancelar
                 </SecondaryButton>
-            </div>
+            </div>-->
         </Modal>
     </AuthenticatedLayout>
 </template>
