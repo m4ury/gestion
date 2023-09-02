@@ -108,40 +108,75 @@ const deleteMedicamento = (id, descripcion) =>{
                 </div>
             </div>
             <div class="bg-white grid v-screen place-items-center overflow-x-auto">
+                <div class="overflow-x-auto shadow-md sm:rounded-lg overflow-hidden mb-3">
+<!-- TABLA INICIO                -->
+                    <table v-if="medicamentos.data.length > 0" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="p-4">
+                                <div class="flex items-center">
+                                    <input id="checkbox-all" type="checkbox" class="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="checkbox-all" class="sr-only">checkbox</label>
+                                </div>
+                            </th>
+                            <th scope="col" class="p-4">Descripción</th>
+                            <th scope="col" class="p-4">Presentación</th>
+                            <th scope="col" class="p-4">Unidad</th>
+                            <th scope="col" class="p-4">Stock</th>
+                            <th scope="col" class="p-4 col-span-3 text-center">Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="med in medicamentos.data" :key="med.id" class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <td class="p-4 w-4">
+                                <div class="flex items-center">
+                                    <input id="checkbox-table-search-1" type="checkbox" onclick="event.stopPropagation()" class="w-4 h-4 text-primary-600 bg-gray-100 rounded border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                </div>
+                            </td>
+                            <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <div class="flex items-center mr-3">
+                                    {{ med.descripcion }}
+                                </div>
+                            </th>
+                            <td class="px-4 py-3">
+                                <span class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                                    {{ med.presentacion }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <div class="flex items-center">
+                                    <div class="h-4 w-4 rounded-full inline-block mr-2 bg-red-700"></div>
+                                    {{ med.unidad }}
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <!--       TODO: give format number                         -->
+                                {{ med.stock_max }}
+                            </td>
 
-                <table v-if="medicamentos.data.length > 0" class="table-auto border border-gray-400">
-                    <thead>
-                        <tr class="bg-gray-100">
-                            <th class="px-2 py-2">DESCRIPCION</th>
-                            <th class="px-2 py-2">PRESENTACION</th>
-                            <th class="px-2 py-2">UNIDAD</th>
-                            <th class="px-2 py-2">STOCK MAXIMO</th>
-                            <th class="px-2 py-2">Editar</th>
-                            <th class="px-2 py-2">Eliminar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="med, i in medicamentos.data" :key="med.id">
-                            <td class="border border-gray-400 px-2 py-2">{{ med.descripcion }}</td>
-                            <td class="border border-gray-400 px-2 py-2">{{ med.presentacion }}</td>
-                            <td class="border border-gray-400 px-2 py-2">{{ med.unidad }}</td>
-                            <td class="border border-gray-400 px-2 py-2">{{ med.stock_max }}</td>
-                            <td class="border border-gray-400 px-2 py-2">
-                                <WarningButton
-                                    @click="openModal(2, med.descripcion, med.presentacion, med.unidad, med.stock_max, med.id)">
-                                    <i class="fa-solid fa-edit"></i>
-                                </WarningButton>
-                            </td>
-                            <td class="border border-gray-400 px-2 py-2">
-                                <DangerButton @click="deleteMedicamento(med.id, med.descripcion)">
-                                    <i class="fa-solid fa-trash"></i>
-                                </DangerButton>
+
+                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <div class="flex items-center space-x-4">
+                                    <SecondaryButton>
+                                        <i class="fa-solid fa-eye"></i>
+                                    </SecondaryButton>
+                                    <WarningButton
+                                        @click="openModal(2, med.descripcion, med.presentacion, med.unidad, med.stock_max, med.id)">
+                                        <i class="fa-solid fa-edit"></i>
+                                    </WarningButton>
+                                    <DangerButton @click="deleteMedicamento(med.id, med.descripcion)">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </DangerButton>
+                                </div>
                             </td>
                         </tr>
-                    </tbody>
-                </table>
-                <div v-else class="bg-white grid v-screen place-items-center">
-                    <h2 class="p-3 text-lg font.medium text-hray-900">No hay datos</h2>
+                        </tbody>
+                    </table>
+                    <!-- TABLA FIN                -->
+                    <div v-else class="bg-white grid v-screen place-items-center">
+                        <h2 class="p-3 text-lg font.medium text-hray-900">No hay datos</h2>
+                    </div>
                 </div>
             </div>
             <div v-if="medicamentos.data.length > 0" class="bg-white grid v-screen place-items-center overflow-x-auto">
